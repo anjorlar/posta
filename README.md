@@ -1,10 +1,13 @@
 # Posta
-A simple node/express API
+A simple node/express API 
+* Base Route `http://localhost:Port/`
+* Sample Route `http://localhost:Port/v1/getAllPost`
 
 ## Technologies Used
 * `Backend: Node/Express`
 * `MongoDb`
 * `Libraries: Express`
+* `Test: Jest`
 
 ## To Install
 * `Download or clone`

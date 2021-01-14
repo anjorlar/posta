@@ -5,7 +5,6 @@ let connectionString = ''
 process.env.NODE_ENV === 'test'
     ? (connectionString = settings.MONGODB.TESTDB)
     : (connectionString = settings.MONGODB.MONGOURL)
-console.log('connectionstring', connectionString)
 
 mongoose.connect(connectionString, {
     useCreateIndex: true,
@@ -13,7 +12,14 @@ mongoose.connect(connectionString, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
 })
-    .then((res) => { console.log(`connected successfully`, connectionString) })
-    .catch((error => { console.log(`error connecting`, error); process.exit(1); }))
+    .then((res) => {
+        console.log(`connected successfully with
+            connectionString: ${res.connections[0]._connectionString}, 
+            Name: ${res.connections[0].name},
+            Host: ${res.connections[0].host},
+            Port: ${res.connections[0].port},
+        `)
+    })
+    .catch((error => { console.log(`error connecting`, error); process.exit(1); }));
 
-module.exports = mongoose
+module.exports = mongoose;

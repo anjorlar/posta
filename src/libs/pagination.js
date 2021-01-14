@@ -1,5 +1,4 @@
 const pagination = (count, paginate) => {
-    console.log(count)
     const numberOfPages = Math.ceil(count / paginate.limit)
     const nextPage = parseInt(paginate.page) + 1
     const meta = {
