@@ -16,6 +16,7 @@ const postaSchema = new mongoose.Schema({
         type: String,
         minlength: 3,
         required: true,
+        trim: true
     },
     date: {
         type: String,

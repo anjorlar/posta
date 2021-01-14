@@ -28,6 +28,10 @@ class PostaController {
                 return res.status(400)
                     .send(responseHelper.error(400, `id already exist please use another id`))
             }
+            if (title.length < 3 || text.length < 3) {
+                return res.status(400)
+                    .send(responseHelper.error(400, `minimun lenght of 3 is required for title: ${title} and text: ${text} `))
+            }
             const data = {
                 id, title, text, date, country_id, language_id,
             }
