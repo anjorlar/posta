@@ -8,7 +8,7 @@ const getCurrentTime = require('../utils/getDate');
 
 class PostaController {
     /**
-    * @description Creates posta data when the required data is passed in the body
+    * @description Creates posta data when the required data is passed in the request body
     * @param {Object} req  req - Http Request object
     * @param {Object} res  res - Http Response object
     * @returns {Object} returns object of the required response
@@ -35,9 +35,9 @@ class PostaController {
             return res.status(201)
                 .send(responseHelper.success(201, `posta data created successefully`, postaData))
         } catch (error) {
-            console.log('internal server error', error)
+            console.log('Internal server error', error)
             return res.status(500)
-                .send(responseHelper.error(500, `internal server error, ${error}`))
+                .send(responseHelper.error(500, `Internal server error, ${error}`))
         }
 
     }
@@ -68,9 +68,9 @@ class PostaController {
             return res.status(200)
                 .send(responseHelper.output(200, `posta data gotten successefully`, getIndividualPost))
         } catch (error) {
-            console.log('internal server error', error)
+            console.log('Internal server error', error)
             return res.status(500)
-                .send(responseHelper.error(500, `internal server error, ${error}`))
+                .send(responseHelper.error(500, `Internal server error, ${error}`))
         }
     }
 
@@ -97,9 +97,9 @@ class PostaController {
             return res.status(200)
                 .send(responseHelper.success(200, 'All posts retrieved successfully', posts, pagination(count, paginate)))
         } catch (error) {
-            console.log('internal server error', error)
+            console.log('Internal server error', error)
             return res.status(500)
-                .send(responseHelper.error(500, `internal server error, ${error}`))
+                .send(responseHelper.error(500, `Internal server error, ${error}`))
         }
     }
 
@@ -148,16 +148,16 @@ class PostaController {
             return res.status(200)
                 .send(responseHelper.output(200, 'post updated successfully', updated))
         } catch (error) {
-            console.log('internal server error', error)
+            console.log('Internal server error', error)
             return res.status(500)
-                .send(responseHelper.error(500, `internal server error, ${error}`))
+                .send(responseHelper.error(500, `Internal server error, ${error}`))
         }
     }
 
 
 
     /**
-     * @description deletes a posta data when the id is passed
+     * @description deletes a posta data when the id is passed as a param
      * @param {*} req req - Http Request object
      * @param {*} res res - Http Response object
      * @returns {Object} returns object of the required response
@@ -182,9 +182,9 @@ class PostaController {
             return res.status(200)
                 .send(responseHelper.output(200, 'post deleted successfully', postDelete))
         } catch (error) {
-            console.log('internal server error', error)
+            console.log('Internal server error', error)
             return res.status(500)
-                .send(responseHelper.error(500, `internal server error, ${error}`))
+                .send(responseHelper.error(500, `Internal server error, ${error}`))
         }
     }
 }
