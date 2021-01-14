@@ -21,7 +21,7 @@ class PostaController {
             //checks if the required data is passed
             if (!id || !title || !text || !country_id || !language_id) {
                 return res.status(400)
-                    .send(responseHelper.error(400, `all fields (id, title, text, date, country_id, language_id) is required`))
+                    .send(responseHelper.error(400, `all fields (id, title, text, country_id, language_id) is required`))
             }
             const idExists = await postaServices.getIdOfPost(id)
             if (idExists) {
@@ -51,13 +51,18 @@ class PostaController {
     async getPostById(req, res) {
         try {
             let { id } = req.params
+            if (!id) {
+                return res.status(400)
+                    .send(responseHelper.error(400, `id is required`))
+            }
             const isValid = mongoose.Types.ObjectId.isValid(id)
             if (!isValid) {
                 return res.status(400).send(responseHelper.error(400, 'invalid Id'))
             }
-            if (!id) {
+            const idExists = await postaServices.getId(id)
+            if (!idExists) {
                 return res.status(400)
-                    .send(responseHelper.error(400, `id is required`))
+                    .send(responseHelper.error(400, `id does not exist please pass a valid id`))
             }
             const getIndividualPost = await postaServices.getId(id)
             return res.status(200)
@@ -71,8 +76,8 @@ class PostaController {
 
     /**
      * @description gets all the posta data and paginates them
-     * @param {*} req 
-     * @param {*} res 
+     * @param {*} req req - Http Request object
+     * @param {*} res res - Http Response object
      * @returns {Object} returns object of the required response
      */
     async getAllPost(req, res) {
@@ -98,24 +103,30 @@ class PostaController {
         }
     }
 
+    /**
+     * @description updates a posta data when the id and content to update is passed
+     * @param {*} req req - Http Request object
+     * @param {*} res res - Http Response object
+     * @returns {Object} returns object of the required response
+     */
     async updatesPost(req, res) {
         try {
             let { id } = req.params
+            const data = req.body
             if (!id) {
                 return res.status(400)
                     .send(responseHelper.error(400, `id is required`))
+            }
+            const isValid = mongoose.Types.ObjectId.isValid(id)
+            if (!isValid) {
+                return res.status(400).send(responseHelper.error(400, 'invalid Id'))
             }
             const idExists = await postaServices.getId(id)
             if (!idExists) {
                 return res.status(400)
                     .send(responseHelper.error(400, `id does not exist please pass a valid id`))
             }
-            const isValid = mongoose.Types.ObjectId.isValid(id)
-            if (!isValid) {
-                return res.status(400).send(responseHelper.error(400, 'invalid Id'))
-            }
-            const data = req.body
-            if (!data) {
+            if (Object.keys(data).length === 0 && data.constructor === Object) {
                 return res.status(400)
                     .send(responseHelper.error(400, `request body cannot be empty`))
             }
@@ -143,6 +154,14 @@ class PostaController {
         }
     }
 
+
+
+    /**
+     * @description deletes a posta data when the id is passed
+     * @param {*} req req - Http Request object
+     * @param {*} res res - Http Response object
+     * @returns {Object} returns object of the required response
+     */
     async deletesPost(req, res) {
         try {
             let { id } = req.params
@@ -150,14 +169,14 @@ class PostaController {
                 return res.status(400)
                     .send(responseHelper.error(400, `id is required`))
             }
+            const isValid = mongoose.Types.ObjectId.isValid(id)
+            if (!isValid) {
+                return res.status(400).send(responseHelper.error(400, 'invalid Id'))
+            }
             const idExists = await postaServices.getId(id)
             if (!idExists) {
                 return res.status(400)
                     .send(responseHelper.error(400, `id does not exist please pass a valid id`))
-            }
-            const isValid = mongoose.Types.ObjectId.isValid(id)
-            if (!isValid) {
-                return res.status(400).send(responseHelper.error(400, 'invalid Id'))
             }
             const postDelete = await postaServices.deleteIndividualPost(id)
             return res.status(200)

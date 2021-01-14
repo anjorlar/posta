@@ -20,4 +20,4 @@ A simple node/express API
 * `npm test`
 
 ## Author
-Anjola
+Anjola Adebayo
